@@ -12,6 +12,7 @@ spec:
       labels:
         app: auth-service
     spec:
+      hostNetwork: true
       containers:
       - name: auth-service
         image: nahidh597/auth-service

@@ -1,5 +1,6 @@
 import express from 'express';
 import 'express-async-errors'
+import mongoose from 'mongoose';
 import { json } from 'body-parser';
 
 import {currentUserRouter} from './routes/current-user'
@@ -27,9 +28,18 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
+const start = async () => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+        
+        console.log("Connected with MondoDB !!");
+    } catch (err) {
+        console.log(err);
+    }
 
+    app.listen(PORT, () => {
+        console.log(`Auth server running on ${PORT} !!!!!!`)
+    });
+}
 
-app.listen(3000, () => {
-    console.log(`Auth server running on ${PORT} !!!!!!`)
-});
-
+start();
