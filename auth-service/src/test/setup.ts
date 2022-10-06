@@ -1,6 +1,14 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import { app } from "../app";
+
+
+declare global {
+  namespace NodeJS {
+    interface Global {
+      signin(): Promise<string[]>
+    }
+  }
+}
 
 let mongo: any;
 
@@ -16,11 +24,14 @@ beforeEach(async () => {
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
-    await collection.deleteMany({});
+    await collection.deleteMany({}); 
   }
 });
 
 afterAll(async () => {
+  jest.setTimeout(2000);
+
   await mongo.stop();
   await mongoose.connection.close();
 });
+
