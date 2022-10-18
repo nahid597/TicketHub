@@ -1,25 +1,3 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ingress-service
-#   annotations:
-#     nginx.ingress.kubernetes.io/rewrite-target: /api/users/?(.*)
-#     nginx.ingress.kubernetes.io/configuration-snippet: /api/users/?(.*)
-#     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#     kubernetes.io/ingress.class: public
-#     nginx.ingress.kubernetes.io/use-regex: 'true'
-# spec:
-#   rules:
-#     - host: ticketing.dev
-#       http:
-#         paths:
-#           - path: /api/users/?(.*)
-#             pathType: prefe
-#             backend:
-#               serviceName: auth-srv
-#               servicePort: 3000
-
-# --- 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -37,6 +15,13 @@ spec:
           service:
             name: auth-srv
             port:
-              number: 3000
+              number: 8080
         path: /api/users/?(.*)
+        pathType: Prefix
+      - backend:
+          service:
+            name: client-srv
+            port:
+              number: 3000
+        path: /?(.*)
         pathType: Prefix

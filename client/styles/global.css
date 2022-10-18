@@ -1,0 +1,5 @@
+.center-content {
+    display: grid;
+    justify-items: center;
+    margin-top: 10%;
+}

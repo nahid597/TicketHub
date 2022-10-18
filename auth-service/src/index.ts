@@ -1,7 +1,7 @@
 import {app} from './app';
 import mongoose from 'mongoose';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const start = async () => {  
 
@@ -10,7 +10,7 @@ const start = async () => {
     }
 
     try {
-        await mongoose.connect('mongodb://10.109.11.14:27017/auth');
+        await mongoose.connect('mongodb://auth-mongo-srv.ingress-nginx.svc.cluster.local:27017/auth');
         
         console.log("Connected with MondoDB !!!");
     } catch (err) {

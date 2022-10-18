@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  selector:
+    matchLabels:
+      app: client-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: client-service
+    spec:
+      hostNetwork: true
+      containers:
+      - name: client-service
+        image: nahidh597/client-service
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client-service
+  type: ClusterIP
+  ports:
+  - name: client-service
+    protocol: TCP
+    port: 3000
+    targetPort: 3000
+---
