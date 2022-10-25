@@ -7,9 +7,9 @@ import {currentUserRouter} from './routes/current-user'
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
-import { errorHandler } from './middleware/error-handler';
+import { errorHandler } from '@nahid597-tickethub/common';
 
-import { NotFoundError } from './errors/not-found-error';
+import { NotFoundError } from '@nahid597-tickethub/common';
 
 const app = express();
 

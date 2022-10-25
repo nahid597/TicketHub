@@ -1,5 +1,5 @@
  const config = {
-    auth_mongo_srv: "10.106.130.252"
+    auth_mongo_srv: "10.102.104.46"
 };
 
 export default config;
