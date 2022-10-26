@@ -25,3 +25,12 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+
+    - image: nahidh597/ticket-service
+      context: ticket-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
