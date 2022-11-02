@@ -7,9 +7,7 @@ import {currentUserRouter} from './routes/current-user'
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
-import { errorHandler } from '@nahid597-tickethub/common';
-
-import { NotFoundError } from '@nahid597-tickethub/common';
+import { errorHandler,NotFoundError } from '@nahid597-tickethub/common';
 
 const app = express();
 
@@ -27,7 +25,7 @@ app.use(signUpRouter);
 
 app.all('*', async(req, res) => {
     throw new NotFoundError();
-})
+});
 
 app.use(errorHandler);
 
