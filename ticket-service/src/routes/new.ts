@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post(
   "/api/tickets",
-   requireAuth,
+  // requireAuth,
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("price")
@@ -21,7 +21,8 @@ router.post(
     const ticket = Ticket.build({
       title,
       price,
-      userId: req.currentUser!.id,
+      userId: '6363e11a673a9a8b78927810'
+      // userId: req.currentUser!.id,
     });
 
     await ticket.save();
@@ -29,9 +30,5 @@ router.post(
     res.status(201).send(ticket);
   }
 );
-
-router.get("/api/tickets", (req: Request, res: Response) => {
-  res.status(200).send("Hello tickets!!");
-});
 
 export { router as createTicketRouter };

@@ -4,6 +4,9 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { NotFoundError,errorHandler, currentUser } from '@nahid597-tickethub/common';
 import { createTicketRouter } from './routes/new';
+import { showTicketRouter } from './routes/show';
+import { indexTicketRouter } from './routes';
+import { updateTicketRouter } from './routes/update';
 
 
 
@@ -19,6 +22,9 @@ app.use(cookieSession({
 app.use(currentUser);
 
 app.use(createTicketRouter);
+app.use(showTicketRouter);
+app.use(indexTicketRouter);
+app.use(updateTicketRouter);
 
 
 app.all('*', async(req, res) => {

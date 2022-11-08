@@ -29,7 +29,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  jest.setTimeout(2000);
+  jest.setTimeout(20000);
 
   await mongo.stop();
   await mongoose.connection.close();

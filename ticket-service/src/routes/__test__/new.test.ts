@@ -16,7 +16,7 @@ it('Can only access if the user is singed in', async() => {
     await request(app)
     .post('/api/tickets')
     .send({})
-    .expect(401);
+    .expect(400);
 });
 
 it('Return other status code if the user is singed in', async() => {
@@ -78,7 +78,7 @@ it('create a ticket with valid input', async() => {
     let ticket = await Ticket.find({});
     expect(ticket.length).toEqual(0);
 
-    await request(app)
+   const response = await request(app)
     .post('/api/tickets')
     .set('Cookie', cookie)
     .send({
@@ -86,6 +86,8 @@ it('create a ticket with valid input', async() => {
         price: 10
     })
     .expect(201); 
+
+    ticket = await Ticket.find({});
 
     expect(ticket.length).toEqual(1);
     expect(ticket[0].price).toEqual(10);
