@@ -1,5 +1,5 @@
  const config = {
-    ticket_mongo_srv: "10.97.133.10"
+    ticket_mongo_srv: "10.98.212.96"
 };
 
 export default config;
