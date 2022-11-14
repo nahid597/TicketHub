@@ -15,7 +15,8 @@ stan.on('connect', async () => {
     await publisher.publish({
         id: '123',
         title: "Created",
-        price: 30
+        price: 30,
+        userId: "asfujlfjou"
     });
 
     // const data = JSON.stringify({

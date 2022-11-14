@@ -6,7 +6,7 @@ export const signin = async () => {
   const payload = {
     id: new mongoose.Types.ObjectId().toHexString(),
     email: "a@a.com",
-    name: "Nahid"
+    name: "nahid"
   }
 
   const token = jwt.sign(payload, process.env.JWT_KEY!);

@@ -2,12 +2,14 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { requireAuth, validateRequest } from "@nahid597-tickethub/common";
 import { Ticket } from "../models/ticket";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
 router.post(
   "/api/tickets",
-  // requireAuth,
+  requireAuth,
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("price")
@@ -21,11 +23,19 @@ router.post(
     const ticket = Ticket.build({
       title,
       price,
-      userId: '6363e11a673a9a8b78927810'
-      // userId: req.currentUser!.id,
+      userId: req.currentUser!.id,
     });
 
     await ticket.save();
+
+    const publisher = new TicketCreatedPublisher(natsWrapper.client);
+
+    await publisher.publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId
+    });
 
     res.status(201).send(ticket);
   }

@@ -1,6 +1,6 @@
 import {Message} from 'node-nats-streaming';
 import { Listener } from '@nahid597-tickethub/common';
-import { Subjects } from '../../../common/src/events/subjects';
+import { Subjects } from '@nahid597-tickethub/common';
 import { TicketCreatedEvent } from '@nahid597-tickethub/common';
 
 export class TicketCreateListener extends Listener<TicketCreatedEvent>{

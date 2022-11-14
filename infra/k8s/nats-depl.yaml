@@ -45,7 +45,7 @@ metadata:
 spec:
   selector:
     app: nats
-  type: ClusterIP
+  type: NodePort
   ports:
   - name: client
     protocol: TCP

@@ -19,19 +19,18 @@ it('Return 404 if the provided id does not exists', async() => {
         .expect(404);
 });
 
-// Need to fixed global require auth middleware
 
-// it('Return 401 if the user not signed in', async() => {
-//     const id = new mongoose.Types.ObjectId().toHexString();
+it('Return 401 if the user not signed in', async() => {
+    const id = new mongoose.Types.ObjectId().toHexString();
 
-//     await request(app)
-//         .put(`/api/tickets/${id}`)
-//         .send({
-//             title: "Update ticket",
-//             price: 30
-//         })
-//         .expect(401);
-// });
+    await request(app)
+        .put(`/api/tickets/${id}`)
+        .send({
+            title: "Update ticket",
+            price: 30
+        })
+        .expect(401);
+});
 
 it('Return 401 if the the user does not own the ticket', async() => {
     const cookie = await signin();

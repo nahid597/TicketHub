@@ -16,7 +16,7 @@ it('Can only access if the user is singed in', async() => {
     await request(app)
     .post('/api/tickets')
     .send({})
-    .expect(400);
+    .expect(401);
 });
 
 it('Return other status code if the user is singed in', async() => {
