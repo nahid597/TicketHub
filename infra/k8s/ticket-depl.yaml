@@ -26,10 +26,11 @@ spec:
           - name: MONGO_URI
             value: 'mongodb://ticket-mongo-srv:27017/tickets'
           - name: JWT_KEY
-            valueFrom:
-              secretKeyRef:
-                name: jwt-secret
-                key: JWT_KEY
+            value: 'privatekey'
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: my-secret
+            #     key: JWT_KEY
         resources:
           limits:
             memory: "500Mi"

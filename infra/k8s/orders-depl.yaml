@@ -1,24 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: orders-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-service
+      app: orders-service
   template:
     metadata:
       labels:
-        app: auth-service
+        app: orders-service
     spec:
       hostNetwork: true
       containers:
-      - name: auth-service
-        image: nahidh597/auth-service
+      - name: orders-service
+        image: nahidh597/orders-service
         env:
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NATS_CLUSTER_ID
+            value: ticketing
           - name: MONGO_URI
-            value: 'mongodb://auth-mongo-srv:27017/auth'
+            value: 'mongodb://orders-mongo-srv:27017/orders'
           - name: JWT_KEY
             value: 'privatekey'
             # valueFrom:
@@ -33,15 +39,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: orders-srv
 spec:
   selector:
-    app: auth-service
+    app: orders-service
   type: ClusterIP
   ports:
-  - name: auth-service
+  - name: orders-service
     protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: 8082
+    targetPort: 8082
 ---
-

@@ -16,15 +16,6 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-        
-    - image: nahidh597/client-service
-      context: client
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: '**/*.js'
-            dest: .
 
     - image: nahidh597/ticket-service
       context: ticket-service
@@ -33,4 +24,22 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
+            dest: .
+
+    - image: nahidh597/orders-service
+      context: orders-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+        
+    - image: nahidh597/client-service
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
             dest: .

@@ -14,13 +14,13 @@ let mongo: any;
 
 beforeAll(async () => {
   process.env.JWT_KEY = "privatekey";
-  mongo = new MongoMemoryServer();
-  const mongUri = await mongo.getUri();
+  mongo = await MongoMemoryServer.create();
+  const mongUri = mongo.getUri();
 
   await mongoose.connect(mongUri);
 });
 
-jest.mock('../nats-wrapper');
+ jest.mock('../nats-wrapper');
 
 beforeEach(async () => {
   const collections = await mongoose.connection.db.collections();
