@@ -4,6 +4,7 @@ import { app } from '../../app';
 import { signin } from '../../global/signin';
 import { Order, OrderStatus } from '../../models/orders';
 import { Ticket } from '../../models/ticket';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('Returns an error if the ticket does not exist on order service', async() => {
     const cookie = await signin();
@@ -60,4 +61,21 @@ it('Reserved a ticket', async() => {
         .expect(201);
 });
 
-it.todo('Emits a event after created order');
+it('Emits a event after created order', async() => {
+    const cookie = await signin();
+    
+    const ticket = Ticket.build({
+        price: 20,
+        title: 'concert'
+    });
+
+    await ticket.save();
+
+    await request(app)
+        .post('/api/orders')
+        .set('Cookie', cookie)
+        .send({ticketId: ticket._id})
+        .expect(201);
+
+        expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
