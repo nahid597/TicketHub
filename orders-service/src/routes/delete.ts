@@ -1,12 +1,12 @@
 import express ,{Request, Response} from 'express';
 import { Order } from '../models/orders';
-import { NotFoundError, NotAuthorizedError, OrderStatus} from '@nahid597-tickethub/common';
+import { NotFoundError, NotAuthorizedError, OrderStatus, requireAuth} from '@nahid597-tickethub/common';
 import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
-router.delete('/api/orders/:orderId', async(req: Request, res: Response) => {
+router.delete('/api/orders/:orderId', requireAuth, async(req: Request, res: Response) => {
     const {orderId} = req.params;
 
     const order = await Order.findById(orderId).populate('ticket');
@@ -16,9 +16,9 @@ router.delete('/api/orders/:orderId', async(req: Request, res: Response) => {
     }
 
     // commit for pass test run
-    // if(order.userId !== req.currentUser!.id) {
-    //     throw new NotAuthorizedError();
-    // }
+    if(order.userId !== req.currentUser!.id) {
+        throw new NotAuthorizedError();
+    }
 
     order.status = OrderStatus.Cancelled;
 
@@ -29,6 +29,7 @@ router.delete('/api/orders/:orderId', async(req: Request, res: Response) => {
 
     await publisher.publish({
         id: order.id,
+        version: order.ticket.version,
         ticket: {
             id: order.ticket.id
         }

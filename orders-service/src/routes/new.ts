@@ -19,7 +19,7 @@ const EXPIRATION_WINDOW_SECONDS = 15 * 50;
 
 router.post(
   "/api/orders",
-  // requireAuth,
+  requireAuth,
   [
     body("ticketId")
       .not()
@@ -48,8 +48,8 @@ router.post(
 
     const order = Order.build({
       // for test
-      // userId: req.currentUser!.id,
-      userId: "6373e5a4a4bf5842cfa1cc8f",
+      // userId: "6373e5a4a4bf5842cfa1cc8f",
+      userId: req.currentUser!.id,
       status: OrderStatus.Created,
       expiresAt: expiration,
       ticket: ticket,
@@ -62,6 +62,7 @@ router.post(
     await publisher.publish({
       id: order.id,
       status: order.status,
+      version: ticket.version,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(),
       ticket: {

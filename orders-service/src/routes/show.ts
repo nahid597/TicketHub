@@ -4,7 +4,7 @@ import { Order } from '../models/orders';
 
 const router = express.Router();
 
-router.get('/api/orders/:orderId', async(req: Request, res: Response) => {
+router.get('/api/orders/:orderId', requireAuth, async(req: Request, res: Response) => {
     const order = await Order.findById(req.params.orderId).populate('ticket');
 
     if(!order) {
@@ -12,9 +12,9 @@ router.get('/api/orders/:orderId', async(req: Request, res: Response) => {
     }
 
     // commit for pass test run
-    // if(order.userId !== req.currentUser!.id) {
-    //     throw new NotAuthorizedError();
-    // }
+    if(order.userId !== req.currentUser!.id) {
+        throw new NotAuthorizedError();
+    }
 
     res.send(order);
 });

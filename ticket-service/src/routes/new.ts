@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post(
   "/api/tickets",
-  requireAuth,
+   requireAuth,
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("price")
@@ -24,9 +24,12 @@ router.post(
       title,
       price,
       userId: req.currentUser!.id,
+      // userId: '123'
     });
 
     await ticket.save();
+
+    console.log(ticket);
 
     const publisher = new TicketCreatedPublisher(natsWrapper.client);
 
@@ -34,7 +37,8 @@ router.post(
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId
+      userId: ticket.userId,
+      version: ticket.version
     });
 
     res.status(201).send(ticket);

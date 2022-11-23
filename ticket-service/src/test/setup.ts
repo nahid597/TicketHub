@@ -14,8 +14,8 @@ let mongo: any;
 
 beforeAll(async () => {
   process.env.JWT_KEY = "privatekey";
-  mongo = new MongoMemoryServer();
-  const mongUri = await mongo.getUri();
+  mongo = await MongoMemoryServer.create();
+  const mongUri = mongo.getUri();
 
   await mongoose.connect(mongUri);
 });

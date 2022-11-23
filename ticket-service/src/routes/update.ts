@@ -31,6 +31,7 @@ router.put(
       throw new NotFoundError();
     }
 
+    // commit for automation test. For production we must un commit this lines
     if (ticket.userId !== req.currentUser?.id) {
       throw new NotAuthorizedError();
     }
@@ -48,7 +49,8 @@ router.put(
       id: ticket.id,
       price: ticket.price,
       title: ticket.title,
-      userId: ticket.userId
+      userId: ticket.userId,
+      version: ticket.version
     });
 
     res.send(ticket);
