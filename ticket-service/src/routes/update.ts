@@ -1,4 +1,5 @@
 import {
+  BadRequestError,
   NotAuthorizedError,
   NotFoundError,
   requireAuth,
@@ -34,6 +35,10 @@ router.put(
     // commit for automation test. For production we must un commit this lines
     if (ticket.userId !== req.currentUser?.id) {
       throw new NotAuthorizedError();
+    }
+
+    if(ticket.orderId) {
+      throw new BadRequestError('Reserved ticket can not be update');
     }
 
     ticket.set({

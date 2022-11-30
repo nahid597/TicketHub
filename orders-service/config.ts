@@ -1,6 +1,6 @@
  const config = {
-    orders_mongo_srv: "10.107.242.37",
-    nats_srv: "10.100.130.86"
+    orders_mongo_srv: "10.107.226.222",
+    nats_srv: "10.98.142.249"
 };
 
 export default config;

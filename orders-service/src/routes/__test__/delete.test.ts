@@ -4,10 +4,12 @@ import { app } from "../../app";
 import { signin } from "../../global/signin";
 import { Order, OrderStatus } from "../../models/orders";
 import { natsWrapper } from "../../nats-wrapper";
+import mongoose from "mongoose";
 
 
 it('Fetch a specific order', async() => {
     const ticket = Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         price: 29,
         title: 'concert'
     });
@@ -37,6 +39,7 @@ it('Fetch a specific order', async() => {
 
 it('Emit a event after cancel the order', async() => {
     const ticket = Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         price: 29,
         title: 'concert'
     });

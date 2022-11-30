@@ -62,7 +62,7 @@ router.post(
     await publisher.publish({
       id: order.id,
       status: order.status,
-      version: ticket.version,
+      version: order.version,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(),
       ticket: {

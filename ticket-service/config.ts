@@ -1,6 +1,6 @@
  const config = {
-    ticket_mongo_srv: "10.108.42.5",
-    nats_srv: "10.100.130.86"
+    ticket_mongo_srv: "10.110.58.66",
+    nats_srv: "10.98.142.249"
 };
 
 export default config;

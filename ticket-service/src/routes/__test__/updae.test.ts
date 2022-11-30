@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { signin } from '../../global/signin';
+import { Ticket } from '../../models/ticket';
 
 
 
@@ -106,6 +107,29 @@ it('Update a ticket with valid input', async() => {
 
         expect(ticketResponse.body.title).toEqual("update ticket");
         expect(ticketResponse.body.price).toEqual(300);
-
-
 });
+
+it('Rejected if the ticket is reserved ', async() => {
+    const cookie = await signin();
+
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({
+            title: "asfsdfs",
+            price: 20
+        });
+
+    const ticket = await Ticket.findById(response.body.id);
+    ticket?.set({orderId: new mongoose.Types.ObjectId().toHexString()});
+
+    await ticket?.save();
+
+        await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .send({
+            title: "Update ticket",
+            price: 300
+        })
+        .expect(400)
+})

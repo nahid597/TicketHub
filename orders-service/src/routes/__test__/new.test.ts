@@ -21,6 +21,7 @@ it('Returns an error if the ticket is already reserved', async() => {
     const cookie = await signin();
     
     const ticket = Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         price: 20,
         title: 'concert'
     });
@@ -48,6 +49,7 @@ it('Reserved a ticket', async() => {
     const cookie = await signin();
     
     const ticket = Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         price: 20,
         title: 'concert'
     });
@@ -65,6 +67,7 @@ it('Emits a event after created order', async() => {
     const cookie = await signin();
     
     const ticket = Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         price: 20,
         title: 'concert'
     });
