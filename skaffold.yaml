@@ -26,6 +26,15 @@ build:
           - src: 'src/**/*.ts'
             dest: .
 
+    - image: nahidh597/expiration-service
+      context: expiration-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+
     - image: nahidh597/orders-service
       context: orders-service
       docker:

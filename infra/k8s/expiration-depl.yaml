@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration-service
+  template:
+    metadata:
+      labels:
+        app: expiration-service
+    spec:
+      hostNetwork: true
+      containers:
+      - name: expiration-service
+        image: nahidh597/expiration-service
+        env:
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NATS_CLUSTER_ID
+            value: ticketing
+          - name: REDIS_HOST
+            value: expiration-redis-srv
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expiration-srv
+spec:
+  selector:
+    app: expiration-service
+  type: ClusterIP
+  ports:
+  - name: expiration-service
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+---

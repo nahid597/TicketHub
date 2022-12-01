@@ -4,6 +4,8 @@ import config from '../config';
 import { natsWrapper } from './nats-wrapper';
 import { TicketCreatedListener } from './events/Listeners/ticket-created-listener';
 import { TicketUpdatedListener } from './events/Listeners/ticket-updated-listener';
+import { ExpirationCompleteListener } from './events/Listeners/expiration-complete-listener';
+
 
 const PORT = 8082 || process.env.PORT;
 
@@ -38,6 +40,7 @@ const start = async () => {
 
         new TicketCreatedListener(natsWrapper.client).listen();
         new TicketUpdatedListener(natsWrapper.client).listen();
+        new ExpirationCompleteListener(natsWrapper.client).listen();
 
         // await mongoose.connect(process.env.MONGO_URI);
          await mongoose.connect(`mongodb://${config.orders_mongo_srv}:27017/orders`);
