@@ -19,6 +19,8 @@ router.post(
 
     const {email, password} = req.body;
 
+    console.log('setup github action');
+
     const existingUser = await User.findOne({email});
 
     if(!existingUser) {
