@@ -6,6 +6,7 @@ export default ({currentUser}) => {
     const links = [
         !currentUser && {label: 'Sign up', href:"/auth/signup"},
         !currentUser && {label: 'Log in', href:"/auth/signin"},
+        currentUser && {label: 'New Ticket', href: "/tickets/new"},
         currentUser && {label: 'Log out', href:"/auth/signout"},
     ]
     .filter(linkConfig => linkConfig)
